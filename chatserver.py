@@ -55,12 +55,12 @@ def handleClient(client, connections):
             return None
         # Check whether something is typed by client
         if not msg.isspace() and msg:
+	    print name+b"->"+msg	
             # Broadcast message to all other clients
             for conn in connections:
                 if conn != client:
                     try:
                         conn.sendall(name+b"->"+msg)
-                        print name+b"->"+msg
                     # Remove client if no longer active
                     except:
                         conn.close()
