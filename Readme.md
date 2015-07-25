@@ -10,4 +10,8 @@ To run:
 
 3) Run: python2.7 chatserver.py
 
+To do:
 
+1) Keep check for dead clients
+
+ 
