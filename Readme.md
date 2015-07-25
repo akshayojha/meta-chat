@@ -4,8 +4,10 @@ Platform: Mac & Linux
 
 To run:
 
-1) Fetch the project
-2) Enter the project directory
+1) Fetch the project:  git clone https://github.com/akshayojha/meta-chat.git
+
+2) Enter the project directory: cd meta-chat
+
 3) Run: python2.7 chatserver.py
 
 
