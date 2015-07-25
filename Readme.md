@@ -14,4 +14,5 @@ To do:
 
 1) Keep check for dead clients
 
+2) Fix a minor bug when user accidently presses key combinations
  
