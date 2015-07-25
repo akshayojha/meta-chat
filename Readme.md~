@@ -1,0 +1,2 @@
+This is a simple IPv4 TCP based chat server written in Python2.7
+To handle arbitrary connection it uses threading
