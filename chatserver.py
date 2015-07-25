@@ -20,8 +20,13 @@ except socket.error, msg:
 print "Successfully created socket!"
 #Server on localhost
 host="127.0.0.1"
-#Get host and port from user
+#Get host andport from user
 host_port=int(raw_input("Enter port:"))
+#Max number on non-accepted connections
+backlog=5
+recv_size=4096
+connections=[server_sock]
+
 #Bind socket to given host and port
 try:
     server_sock.bind((host, host_port))
@@ -33,3 +38,38 @@ print "Binding established!"
 server_sock.listen(backlog)
 print "Meta Chat Server started!"
 print "Waiting for clients..."
+def getNick(client):
+    nick_msg="Welcome! Enter your nick and press enter: "
+    client.sendall(nick_msg)
+    nick=str(client.recv(recv_size))
+    nick=nick[:nick.rfind('\n')]
+    print nick
+    return nick
+
+def handleClient(client):
+#Send acknowledgment to client
+    name=getNick(client)
+    while True:
+        msg=str(client.recv(recv_size))
+        msg=msg[:msg.rfind('\n')]
+        msg=name+"->"+msg
+        print msg
+        for conn in connections:
+            if conn !=client and conn!=server_sock:
+                try:
+                    conn.sendall(msg)
+                except:
+                    conn.close()
+                    connections.remove(conn)
+#Close connection with client
+    client.close()    
+
+while True:
+#Accept connection from client
+    client, client_addr =server_sock.accept()
+    connections.append(client)
+    print "Connected to "+client_addr[0]+":"+str(client_addr[1])
+    start_new_thread(handleClient, (client,))
+
+#Close socket to terminate connection
+server_sock.close()
